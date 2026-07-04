@@ -60,6 +60,7 @@ provisioner "remote-exec" {
     "cd /home/ec2-user/splunk-script && chmod +x splunk.sh && sudo bash splunk.sh"
   ]
 }
+}
 
 resource "aws_route53_record" "a-records" {
   for_each = var.components
