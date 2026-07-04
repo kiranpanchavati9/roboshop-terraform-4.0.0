@@ -38,14 +38,21 @@ resource "aws_instance" "instance" {
   for_each = var.components
   ami           = var.ami
   instance_type = var.instance_type
+  key_name = var.key_name
   security_groups = [aws_security_group.allow_ports_firewall_roboshop.name]
   tags = {
     Name = each.key
   }
-    provisioner "local-exec" {
-      command = "echo The server's IP address is ${self.private_ip}"
+  provisioner "remote-exec" {
+    connection {
+      type     = "ssh"
+      private_key = file("/home/ec2-user/.ssh")
+      host     = self.public_ip
     }
   }
+
+}
+
 
 resource "aws_route53_record" "a-records" {
   for_each = var.components
@@ -55,5 +62,3 @@ resource "aws_route53_record" "a-records" {
   ttl     = var.ttl
   records = [aws_instance.instance[each.key].public_ip]
 }
-
-
