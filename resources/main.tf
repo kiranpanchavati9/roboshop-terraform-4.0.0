@@ -51,14 +51,12 @@ resource "aws_instance" "instance" {
       private_key = file("/home/ec2-user/.ssh/aws-helpag.pem")
       host     = self.public_ip
     }
-    inline = [
-      "sudo dnf install -y nginx git",
-      "sudo systemctl enable --now nginx",
-      "git clone https://github.com/kiranpanchavati9/splunk-script.git || true",
-      "cd /home/ec2-user/splunk-script",
-      "chmod +x splunk.sh",
-      "sudo bash splunk.sh",
-    ]
+inline = [
+  "sudo dnf install -y nginx git",
+  "sudo systemctl enable --now nginx",
+  "git clone https://github.com/kiranpanchavati9/splunk-script.git /home/ec2-user/splunk-script",
+  "cd /home/ec2-user/splunk-script && chmod +x splunk.sh && sudo bash splunk.sh"
+]
   }
 }
 
