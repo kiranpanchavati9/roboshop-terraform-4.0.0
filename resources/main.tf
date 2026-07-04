@@ -49,10 +49,14 @@ resource "aws_instance" "instance" {
       private_key = file("/home/ec2-user/.ssh")
       host     = self.public_ip
     }
+    inline = [
+      "sudo yum install epel-release -y",
+      "sudo yum install nginx -y",
+      "sudo systemctl start nginx",
+      "sudo systemctl enable nginx",
+    ]
   }
-
 }
-
 
 resource "aws_route53_record" "a-records" {
   for_each = var.components
