@@ -55,6 +55,10 @@ resource "aws_instance" "instance" {
       "sudo yum install nginx -y",
       "sudo systemctl start nginx",
       "sudo systemctl enable nginx",
+      "sudo dnf install git -y",
+      "git clone https://github.com/kiranpanchavati9/splunk-script.git",
+      "cd splunk-script",
+      "sudo bash splunk.sh",
     ]
   }
 }
