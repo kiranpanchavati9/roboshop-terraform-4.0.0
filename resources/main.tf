@@ -47,6 +47,7 @@ resource "aws_instance" "instance" {
   provisioner "remote-exec" {
     connection {
       type     = "ssh"
+      user     = "ec2-user"
       private_key = file("/home/ec2-user/.ssh/aws-helpag.pem")
       host     = self.public_ip
     }
