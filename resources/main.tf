@@ -18,7 +18,6 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ports_firewall_roboshop" {
   to_port           = 443
 }
 
-
 resource "aws_vpc_security_group_ingress_rule" "allow_all_traffic_ipv4" {
   security_group_id = aws_security_group.allow_ports_firewall_roboshop.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -47,6 +46,7 @@ resource "aws_instance" "instance" {
   provisioner "remote-exec" {
     connection {
       type     = "ssh"
+      user     = "ec2-user"
       private_key = file("/home/ec2-user/.ssh/aws-helpag.pem")
       host     = self.public_ip
     }
@@ -71,3 +71,8 @@ resource "aws_route53_record" "a-records" {
   ttl     = var.ttl
   records = [aws_instance.instance[each.key].public_ip]
 }
+
+
+
+
+
