@@ -42,7 +42,11 @@ resource "aws_instance" "instance" {
   tags = {
     Name = each.key
   }
-}
+    provisioner "local-exec" {
+      command = "echo The server's IP address is ${self.private_ip}"
+    }
+  }
+
 resource "aws_route53_record" "a-records" {
   for_each = var.components
   zone_id = var.zone_id
