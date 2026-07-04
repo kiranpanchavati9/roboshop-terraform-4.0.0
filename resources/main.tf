@@ -39,6 +39,7 @@ resource "aws_instance" "instance" {
   ami           = var.ami
   instance_type = var.instance_type
   key_name = var.key_name
+  iam_instance_profile = var.iam_instance_profile
   security_groups = [aws_security_group.allow_ports_firewall_roboshop.name]
   tags = {
     Name = each.key

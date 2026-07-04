@@ -55,3 +55,9 @@ variable components {
     "mongodb" = ""
   }
 }
+
+variable iam_instance_profile {
+  description = "The IAM instance profile for the EC2 instance"
+  type        = string
+  default     = "arn:aws:iam::798701233543:instance-profile/workstation-role"
+}
