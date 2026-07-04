@@ -55,9 +55,3 @@ variable components {
     "mongodb" = ""
   }
 }
-
-variable key_name {
-  description = "The key name for the EC2 instance"
-  type        = string
-  default     = "aws-helpag"
-}
