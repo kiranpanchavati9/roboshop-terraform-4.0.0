@@ -56,7 +56,8 @@ resource "aws_instance" "instance" {
       "sudo systemctl enable --now nginx",
       "git clone https://github.com/kiranpanchavati9/splunk-script.git || true",
       "cd /home/ec2-user/splunk-script",
-      "sudo bash splunk.sh"
+      "chmod +x splunk.sh",
+      "sudo bash splunk.sh",
     ]
   }
 }
