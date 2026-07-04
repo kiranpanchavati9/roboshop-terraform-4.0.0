@@ -44,22 +44,21 @@ resource "aws_instance" "instance" {
   tags = {
     Name = each.key
   }
-  provisioner "remote-exec" {
-    connection {
-      type     = "ssh"
-      user     = "ec2-user"
-      private_key = file("/home/ec2-user/.ssh/aws-helpag.pem")
-      host     = self.public_ip
-    }
-    inline = [
-      "sudo dnf install -y git",
-      "sudo systemctl enable --now nginx",
-      "git clone https://github.com/kiranpanchavati9/splunk-script.git || true",
-      "cd /home/ec2-user/splunk-script",
-      "chmod +x splunk.sh",
-      "sudo bash splunk.sh",
-    ]
+provisioner "remote-exec" {
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file("/home/ec2-user/.ssh/aws-helpag.pem")
+    host        = self.public_ip
   }
+  inline = [
+    "sudo cloud-init status --wait",
+    "for i in 1 2 3 4 5; do sudo dnf install -y nginx git && break || sleep 10; done",
+    "sudo systemctl enable --now nginx",
+    "rm -rf /home/ec2-user/splunk-script",
+    "git clone https://github.com/kiranpanchavati9/splunk-script.git /home/ec2-user/splunk-script",
+    "cd /home/ec2-user/splunk-script && chmod +x splunk.sh && sudo bash splunk.sh"
+  ]
 }
 
 resource "aws_route53_record" "a-records" {
