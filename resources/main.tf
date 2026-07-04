@@ -32,7 +32,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
 }
 
 
-## Create Multiple EC2 instances 
+## Create Multiple EC2 instances  with remote-exec provisioner
 
 resource "aws_instance" "instance" {
   for_each = var.components
