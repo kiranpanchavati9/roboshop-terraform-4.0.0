@@ -31,6 +31,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
 
+
 ## Create Multiple EC2 instances 
 
 resource "aws_instance" "instance" {
@@ -51,12 +52,12 @@ resource "aws_instance" "instance" {
       host     = self.public_ip
     }
     inline = [
-      "sudo yum install epel-release -y",
-      "sudo yum install nginx -y",
+      "sudo dnf install -y nginx git",
+      "sudo systemctl enable --now nginx",
       "sudo systemctl start nginx",
       "sudo systemctl enable nginx",
       "sudo dnf install git -y",
-      "git clone https://github.com/kiranpanchavati9/splunk-script.git",
+      "git clone https://github.com/kiranpanchavati9/splunk-script.git || true",
       "cd splunk-script",
       "sudo bash splunk.sh",
     ]
@@ -71,8 +72,3 @@ resource "aws_route53_record" "a-records" {
   ttl     = var.ttl
   records = [aws_instance.instance[each.key].public_ip]
 }
-
-
-
-
-
