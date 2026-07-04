@@ -52,7 +52,7 @@ resource "aws_instance" "instance" {
       host     = self.public_ip
     }
     inline = [
-      "sudo dnf install -y nginx git",
+      "sudo dnf install -y git",
       "sudo systemctl enable --now nginx",
       "git clone https://github.com/kiranpanchavati9/splunk-script.git || true",
       "cd /home/ec2-user/splunk-script",
